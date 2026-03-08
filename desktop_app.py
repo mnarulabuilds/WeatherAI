@@ -83,8 +83,9 @@ class WeatherApp(ctk.CTk):
             self.progress.set(1.0)
             self.log("Step 2: Training both Predictor and Classifier complete.")
             self.after(0, self.training_done)
-        except Exception as e:
-            self.after(0, lambda: messagebox.showerror("Training Error", str(e)))
+        except Exception as error:
+            err_msg = str(error)
+            self.after(0, lambda m=err_msg: messagebox.showerror("Training Error", m))
             self.after(0, lambda: self.train_btn.configure(state="normal"))
 
     def training_done(self):
@@ -119,8 +120,10 @@ class WeatherApp(ctk.CTk):
             self.viz.plot_comparison(y_reg, pred_features, 0) # Max Temp
             
             self.after(0, self.display_results)
-        except Exception as e:
-            self.after(0, lambda: messagebox.showerror("Prediction Error", str(e)))
+        except Exception as error:
+            # Capturing the error in a local variable for the lambda
+            err_msg = str(error)
+            self.after(0, lambda m=err_msg: messagebox.showerror("Prediction Error", m))
 
     def display_results(self):
         # Load the newly created image

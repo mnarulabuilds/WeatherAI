@@ -1,3 +1,5 @@
+import matplotlib
+matplotlib.use('Agg') # Thread-safe backend for file generation
 import matplotlib.pyplot as plt
 import numpy as np
 import os
@@ -19,7 +21,7 @@ class WeatherVisualizer:
         days = np.arange(len(actual))
         
         plt.plot(days, actual[:, feature_idx], 'g*', label='Actual', markersize=4)
-        plt.plot(days, predicted[:, feature_idx], 'r@', label='Predicted', alpha=0.6)
+        plt.plot(days, predicted[:, feature_idx], 'ro', label='Predicted', alpha=0.6, markersize=2)
         
         label = self.feature_labels[feature_idx]
         plt.title(title or f"Comparison: {label}")
@@ -45,7 +47,7 @@ class WeatherVisualizer:
         days = np.arange(len(y_actual))
         
         plt.plot(days, y_actual, 'b^', label='Actual', markersize=6)
-        plt.plot(days, y_pred, 'r@', label='Predicted', alpha=0.6)
+        plt.plot(days, y_pred, 'ro', label='Predicted', alpha=0.6, markersize=3)
         
         plt.yticks(list(label_map.keys()), list(label_map.values()))
         plt.title("Weather Class Comparison")
