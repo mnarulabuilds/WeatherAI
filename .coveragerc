@@ -1,0 +1,9 @@
+[run]
+branch = True
+source = weather_ai
+omit = weather_ai/app.py
+
+[report]
+show_missing = True
+skip_empty = True
+fail_under = 90

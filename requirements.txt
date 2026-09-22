@@ -2,5 +2,9 @@ numpy
 pandas
 matplotlib
 scikit-learn
-seaborn
 customtkinter
+Pillow
+
+# Development
+pytest
+pytest-cov

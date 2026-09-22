@@ -1,0 +1,21 @@
+[project]
+name = "weatherai"
+version = "2.0.0"
+description = "Neural weather prediction and classification desktop app"
+readme = "README.md"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q --import-mode=importlib"
+
+[tool.coverage.run]
+branch = true
+source = ["weather_ai"]
+omit = ["weather_ai/app.py"]
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true
+fail_under = 90

@@ -1,41 +1,62 @@
-# Weather-Prediction-Using-Neural-Networks
+# WeatherAI
 
-A modern Python-based Machine Learning project for weather feature prediction and classification. The system uses Neural Networks to classify weather into Thunderstorm, Rainy, Foggy, and Sunny categories, and predicts future weather features (temperatures, humidity, pressure, etc.) based on historical data.
+Production-oriented Python application for weather feature prediction and classification using neural networks. The system learns from daily historical records (1997–2015), forecasts year-over-year feature trajectories, and classifies conditions as Thunderstorm, Rainy, Foggy, or Sunny.
 
-## Features
-- **Neural Network Prediction**: Predicts future weather parameters using multi-layer perceptrons.
-- **Weather Classification**: Categorizes daily weather into four distinct types.
-- **Desktop Application**: Modern GUI built with `CustomTkinter` for easy interaction.
-- **Data Visualization**: Comparison charts generated with `Matplotlib`.
+## Highlights
 
-## Prerequisites
-- Python 3.10 or higher
-- Pip (Python package installer)
+- **Optimized ML pipeline** — vectorized dataset construction, float32 features, scaled regression targets, Adam + early stopping.
+- **Honest metrics** — temporal hold-out evaluation before the final fit (MAE, R², classification accuracy).
+- **Desktop studio UI** — CustomTkinter dashboard with metrics, activity log, theme toggle, and cross-platform plot folder access.
+- **Tested** — pytest suite with ≥90% coverage (`pytest --cov`).
 
-## Installation
+## Requirements
 
-1. Clone or download the repository.
-2. Install the required Python libraries:
-   ```bash
-   pip install -r requirements.txt
-   ```
+- Python 3.10+
+- Dependencies in `requirements.txt`
 
-## Usage
+## Install
 
-### Running the Desktop App (Recommended)
-Launch the professional GUI to train models and view predictions:
 ```bash
-python desktop_app.py
+pip install -r requirements.txt
 ```
 
-### Running the Engine (CLI)
-You can also interact with the core engine directly:
+## Run
+
+On **macOS with Homebrew Python**, install Tk once (required for the GUI):
+
 ```bash
+brew install python-tk@3.14   # match your python3 --version minor release
+```
+
+```bash
+# Desktop app (recommended)
+python desktop_app.py
+
+# CLI engine
 python weather_engine.py
 ```
 
-## Dataset
-The project includes historical weather data from 1997 to 2015 (`WeatherXXXX.txt` files) used for training the neural networks.
+## Tests & coverage
 
-## Old Project Files
-The original Octave and C++ files have been superseded by this Python migration for better performance, maintainability, and user experience.
+```bash
+pytest
+bash scripts/run_coverage.sh
+```
+
+Coverage is enforced at **≥90%** on the `weather_ai` package (engine, metrics, controller, visualizer). The CustomTkinter layout module (`weather_ai/app.py`) is excluded from the gate because headless CI often lacks `_tkinter`; UI flows are covered indirectly via `AppController` tests.
+
+On Python 3.14, use `scripts/run_coverage.sh` (per-test coverage processes) instead of `pytest --cov`, which can conflict with NumPy’s import hooks.
+
+## Project layout
+
+```
+weather_ai/          # Core package (engine, metrics, UI, visualizer)
+tests/               # Unit tests
+WeatherYYYY.txt      # Training data (1997–2015)
+desktop_app.py       # App entry point
+weather_engine.py    # CLI entry point (backward compatible)
+```
+
+## Dataset
+
+Each `WeatherYYYY.txt` row contains a bias term, 11 numeric weather features, and a 4-character class code (`0001`, `0010`, `0100`, `1000`).
